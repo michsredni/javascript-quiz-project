@@ -33,7 +33,6 @@ class Quiz {
   }
 
   checkAnswer(answer) {
-    /// FALTA HACER
     let currentQuestion = this.getQuestion();
     console.log(currentQuestion);
     if (answer === currentQuestion.answer) {
