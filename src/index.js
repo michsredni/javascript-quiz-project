@@ -11,6 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const choiceContainer = document.querySelector("#choices");
   const nextButton = document.querySelector("#nextButton");
 
+  const restartBtn = document.querySelector("#restartButton")
+
   // End view elements
   const resultContainer = document.querySelector("#result");
 
@@ -26,10 +28,15 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Array with the quiz questions
   const questions = [
-    new Question("What is 2 + 2?", ["3", "4", "5", "6"], "4", 1),
-    new Question("What is the capital of France?", ["Miami", "Paris", "Oslo", "Rome"], "Paris", 1),
-    new Question("Who created JavaScript?", ["Plato", "Brendan Eich", "Lea Verou", "Bill Gates"], "Brendan Eich", 2),
-    new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
+    new Question("¿Cuál es el emoji que mejor describe cómo nos sentimos después de una larga jornada de codificación?", ["😅 (aliviado después de solucionar un bug)", "🤯 (cuando el código parece no funcionar)", "🚀 (cuando finalmente logramos que funcione)", "😴 (necesitando una siesta después de tanto pensar)"], "😴 (necesitando una siesta después de tanto pensar)", 1),
+    new Question("¿En qué planeta nació Luke Skywalker?", ["Naboo", " Tatooine ", "Alderaan", "Gallifrey"], "Tatooine", 2),
+    new Question("¿Cuál de estos personajes no pertenece al universo de Marvel?", ["Iron Man", "Thor", "Batman", "Black Widow"], "Batman", 2),
+    new Question("¿Qué animal representa mejor la personalidad de nuestro profesor de bootcamp?", ["León (líder fuerte y motivador)", "Búho (sabio y con respuestas para todo)", "Tortuga (paciente y meticuloso)", "Mono (activo y lleno de energía)"], "Búho (sabio y con respuestas para todo)", 2),
+    new Question("¿Qué casa de Hogwarts tiene un león?", ["Slytherin", "Ravenclaw", "Hufflepuff", "Gryffindor"], "Gryffindor", 1),
+    new Question("¿Cuál es el nombre del dragón en El Hobbit?", ["Smaug", "Drogon", "Falkor", "Toothless"], "Smaug", 1),
+    new Question("¿Cuál es la palabra o frase más usada por nuestro grupo durante el bootcamp?", ["¿A ti te funciona?", "¡Ya lo tengo!", "¡No se que hice!", "¿Qué pasó aquí?"], "¡No se que hice!", 1),
+    new Question("¿Cuál es el país más largo del mundo de norte a sur?", ["Brasil", "Rusia", "Chile", "Canadá"], "Chile", 1),
+
     // Add more questions here
   ];
   const quizDuration = 120; // 120 seconds (2 minutes)
@@ -85,9 +92,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 1000);
 
 
+
+
+
   /************  EVENT LISTENERS  ************/
 
   nextButton.addEventListener("click", nextButtonHandler);
+  restartBtn.addEventListener("click", () => { 
+    quiz.timeRemaining = 120;
+    quiz.correctAnswers = 0;
+    quiz.currentQuestionIndex = 0;
+
+    quizView.style.display = "flex";
+    endView.style.display = "none";
+    showQuestion()
+
+  })
 
 
 
