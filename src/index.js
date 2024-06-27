@@ -60,7 +60,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /************  TIMER  ************/
 
-  let timer;
+  const intervalId = setInterval(() => {
+    // remainingTime--;
+    // timeRemainingContainer.innerText = remainingTime;
+    // if (remainingTime === 0) {
+    // clearInterval(intervalId);
+    // }
+
+    //restar al timeRemaining de Quiz
+    quiz.timeRemaining--
+    // console.log(quiz.timeRemaining)
+    // convertir el valor en segundos de timeRemaining a Min y Seg
+    const minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+    const seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+    // console.log(minutes, seconds) 
+    // convertimos a minutos y segundos
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+    // cuando el timer llegue a 0, se detiene el temporizador
+    if (quiz.timeRemaining === 0){
+      clearInterval(intervalId)
+      showResults()
+    }
+
+  }, 1000);
 
 
   /************  EVENT LISTENERS  ************/
@@ -173,18 +195,25 @@ document.addEventListener("DOMContentLoaded", () => {
     // YOUR CODE HERE:
     //
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
-    const allChoices = questions.choices.filter((radioButton) => {
-      if (radioButton.checked){}
-    })
-    return allChoices
+    let allChoices = document.querySelectorAll("#choices input")
+    console.log(allChoices) 
+    
     
 
     // 2. Loop through all the choice elements and check which one is selected
       // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
       //  When a radio input gets selected the `.checked` property will be set to true.
       //  You can use check which choice was selected by checking if the `.checked` property is true.
-
-      
+    allChoices.forEach((cadaElem) => {
+      if (cadaElem.checked === true){
+        // console.log(cadaElem)
+        // console.log(cadaElem.checked)
+        selectedAnswer = cadaElem.value
+      }
+    })
+      quiz.checkAnswer(selectedAnswer)
+      quiz.moveToNextQuestion()
+      showQuestion()
     // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
       // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
       // Move to the next question by calling the quiz method `moveToNextQuestion()`.
@@ -203,7 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
     endView.style.display = "flex";
     
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
+    resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${quiz.questions.length} correct answers!`; // This value is hardcoded as a placeholder
   }
   
 });
